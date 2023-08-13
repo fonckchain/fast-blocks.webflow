@@ -1,0 +1,544 @@
+<!DOCTYPE html><!--  This site was created in Webflow. https://www.webflow.com  -->
+<!--  Last Published: Sun Aug 13 2023 23:10:52 GMT+0000 (Coordinated Universal Time)  -->
+<html data-wf-page="64d95c45ec479ec11e901a2e" data-wf-site="64b21fc0a5aef8291efa036f">
+<head>
+  <meta charset="utf-8">
+  <title>Fast Blocks</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/fast-blocks.webflow.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic","Oswald:200,300,400,500,600,700","Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic"]  }});</script>
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link href="images/webclip.png" rel="apple-touch-icon"><!--  Load jQuery  -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <style>
+.swiper-slide-shadow-left, .swiper-slide-shadow-right {
+  pointer-events: none;
+}
+/* basic properties for the slider */
+.swiper-wrapper{
+	transform-style: preserve-3d;
+	transition-property: transform;
+	box-sizing: content-box;
+}
+/* Fade text down if slide is not active */
+#wheel-slider .swiper-slide .slide-heading, 
+#wheel-slider .swiper-slide .slide-category {
+	transform: translateY(140%);
+	-webkit-transform: translateY(140%);
+	-moz-transform: translateY(140%);
+	-ms-transform: translateY(140%);
+	-o-transform: translateY(140%);
+  opacity: 0;
+}
+/* Fade category text up and down with a delay */
+#wheel-slider .swiper-slide .slide-category {
+	transition-delay: 0.3s;
+}
+/* Fade heading text up and down with a delay */
+#wheel-slider .swiper-slide .slide-heading {
+	transition-delay: 0.8s;
+}
+/* Transform the active slide */
+#wheel-slider .swiper-slide.swiper-slide-active {
+	transform: rotate(0deg) translateY(0px) !important;
+	-webkit-transform: rotate(0deg) translateY(0px) !important;
+	-moz-transform: rotate(0deg) translateY(0px) !important;
+	-ms-transform: rotate(0deg) translateY(0px) !important;
+	-o-transform: rotate(0deg) translateY(0px) !important;
+}
+/* Fade text up if slide is active */
+#wheel-slider .swiper-slide.swiper-slide-active .slide-heading, 
+#wheel-slider .swiper-slide.swiper-slide-active .slide-category {
+	transform: translateY(0%);
+	-webkit-transform: translateY(0%);
+	-moz-transform: translateY(0%);
+	-ms-transform: translateY(0%);
+	-o-transform: translateY(0%);
+  opacity: 1.0;
+}
+/* Transform the first slides before */
+#wheel-slider .swiper-slide.swiper-slide-prev { 
+	transform: rotate(-10deg) translateY(100px) !important; 
+  -webkit-transform: rotate(-10deg) translateY(100px) !important; 
+  -moz-transform: rotate(-10deg) translateY(100px) !important; 
+  -ms-transform: rotate(-10deg) translateY(100px) !important; 
+  -o-transform: rotate(-10deg) translateY(100px) !important;
+}
+/* Transform the first slide after */
+#wheel-slider .swiper-slide.swiper-slide-next { 
+	transform: rotate(10deg) translateY(100px) !important; 
+  -webkit-transform: rotate(10deg) translateY(100px) !important; 
+  -moz-transform: rotate(10deg) translateY(100px) !important; 
+  -ms-transform: rotate(10deg) translateY(100px) !important; 
+  -o-transform: rotate(10deg) translateY(100px) !important;
+}
+/* Transform all slides after */
+#wheel-slider .swiper-slide.swiper-slide-next + .swiper-slide{
+	transform: rotate(20deg) translateY(400px) !important;
+	-webkit-transform: rotate(20deg) translateY(400px) !important;
+	-moz-transform: rotate(20deg) translateY(400px) !important;
+	-ms-transform: rotate(20deg) translateY(400px) !important;
+	-o-transform: rotate(20deg) translateY(400px) !important;
+}
+/* Transform all slides before */
+#wheel-slider .swiper-slide{
+	transform: rotate(-20deg) translateY(400px) !important;
+	-webkit-transform: rotate(-20deg) translateY(400px) !important;
+	-moz-transform: rotate(-20deg) translateY(400px) !important;
+	-ms-transform: rotate(-20deg) translateY(400px) !important;
+	-o-transform: rotate(-20deg) translateY(400px) !important;
+}
+</style>
+  <!--  Add the fullPage.js CSS  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+  var myFullpage = new fullpage('#fullpage', {
+    licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
+    autoScrolling: true,
+    scrollHorizontally: false,
+    fitToSection: true,
+    loopBottom: false,
+    loopTop: false,
+    afterLoad: function(origin, destination, direction){
+      var loadedSection = destination.item;
+      if(destination.index == 2){
+        //we are in section3, stop auto scrolling
+        myFullpage.setAllowScrolling(false);
+      }
+    },
+    onLeave: function(origin, destination, direction){
+      var leavingSection = origin.item;
+      if(origin.index == 2){
+        //we are leaving section3, allow auto scrolling
+        myFullpage.setAllowScrolling(true);
+      }
+    }
+  });
+  // Add click event listener to the 'learn-more-btn' button
+  document.querySelector('#learn-more-btn').addEventListener('click', function() {
+    myFullpage.moveTo(2); // move to section2 when the button is clicked
+  });
+  // Add click event listener to the 'uncover-edge-btn' button
+  document.querySelector('#uncover-edge-btn').addEventListener('click', function() {
+    myFullpage.moveTo(3); // move to section3 when the button is clicked
+  });
+    document.querySelector('#nav-top-btn').addEventListener('click', function() {
+    myFullpage.moveTo(2); // move to section2 when the button is clicked
+  });
+  // Add click event listener to the 'begin-journey-btn' button
+  document.querySelector('#move-to-cta-btn').addEventListener('click', function() {
+    myFullpage.moveTo(4); // move to section4 when the button is clicked
+  });
+});
+</script>
+</head>
+<body class="body">
+  <div id="fullpage">
+    <section id="section1" class="home-page-1 section">
+      <div class="overlay-gradient"></div><img src="images/round-table_compressed.png" loading="lazy" sizes="100vw" srcset="images/round-table_compressed-p-500.png 500w, images/round-table_compressed-p-800.png 800w, images/round-table_compressed-p-1080.png 1080w, images/round-table_compressed.png 1456w" alt="Round Table with beautiful sight" class="background-img1">
+      <div class="navbar-no-shadow-2">
+        <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-no-shadow-container-2 w-nav">
+          <div class="container-regular-2">
+            <div class="navbar-wrapper-2">
+              <a href="#" class="navbar-brand-2 w-nav-brand"><img src="images/Color-logo---no-background.svg" loading="lazy" width="387" alt="" class="logo"><img src="images/Color-logo---no-background_2.png" loading="lazy" width="122" srcset="images/Color-logo---no-background_2-p-500.png 500w, images/Color-logo---no-background_2-p-800.png 800w, images/Color-logo---no-background_2-p-1080.png 1080w, images/Color-logo---no-background_2-p-1600.png 1600w, images/Color-logo---no-background_2-p-2000.png 2000w, images/Color-logo---no-background_2-p-2600.png 2600w, images/Color-logo---no-background_2.png 3162w" sizes="(max-width: 479px) 378.015625px, 100vw" alt="" class="logo-narrow"></a>
+              <nav role="navigation" class="nav-menu-wrapper-2 w-nav-menu">
+                <ul role="list" class="nav-menu-2 w-list-unstyled">
+                  <li>
+                    <a href="#" class="nav-link-2">About</a>
+                  </li>
+                  <li>
+                    <a href="#" class="nav-link-2">Services</a>
+                  </li>
+                  <li>
+                    <a href="#" class="nav-link-2">Technology</a>
+                  </li>
+                  <li>
+                    <a href="#" class="nav-link-2">Pricing</a>
+                  </li>
+                  <li>
+                    <div data-hover="false" data-delay="0" class="nav-dropdown-2 w-dropdown">
+                      <div class="nav-dropdown-toggle-2 w-dropdown-toggle">
+                        <div class="nav-dropdown-icon-2 w-icon-dropdown-toggle"></div>
+                        <div class="text-block-6">Resources</div>
+                      </div>
+                      <nav class="nav-dropdown-list-2 shadow-three mobile-shadow-hide w-dropdown-list">
+                        <a href="#" class="nav-dropdown-link-2 w-dropdown-link">Resource Link 1</a>
+                        <a href="#" class="nav-dropdown-link-2 w-dropdown-link">Resource Link 2</a>
+                        <a href="#" class="nav-dropdown-link-2 w-dropdown-link">Resource Link 3</a>
+                      </nav>
+                    </div>
+                  </li>
+                  <li class="mobile-margin-top-11">
+                    <div class="nav-button-wrapper-2">
+                      <a href="#" class="button-primary-3 w-button">Get Started</a>
+                    </div>
+                  </li>
+                </ul>
+              </nav>
+              <div class="menu-button-2 w-nav-button">
+                <div class="icon w-icon-nav-menu"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-layout-blockcontainer container-88-percent w-container">
+        <div class="w-layout-blockcontainer container-page-1 w-container">
+          <div class="w-layout-blockcontainer centered-section w-container">
+            <h1 class="main-heading">Elevate Your Business to New Heights</h1>
+            <div class="w-layout-blockcontainer cen-text-container w-container">
+              <p class="subtitle">Harness the power of digital transformation<br></p>
+              <p class="paragraph">We specialize in web development, AI, and blockchain solutions to drive innovation, automate processes, and elevate your business</p>
+            </div>
+            <div class="w-layout-blockcontainer center-button-container w-container">
+              <a href="#" id="learn-more-btn" class="learn-more-button w-button">LEARN MORE</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section2" class="home-page-2 section">
+      <div class="w-layout-blockcontainer container-page2 w-container">
+        <main class="background-color">
+          <section class="wrapper-container section-wrapper section-2">
+            <div class="container-fulljs">
+              <div class="w-layout-blockcontainer container-top w-container">
+                <header class="header-2">
+                  <div class="wrapper-header">
+                    <div class="header-sub">
+                      <div class="sub-line"></div>
+                      <div class="w-layout-blockcontainer comp-text-container w-container">
+                        <p class="composed-text">Empowering Businesses </p>
+                        <p class="composed-text p2-text">with Digital Excellence</p>
+                      </div>
+                    </div>
+                    <div class="w-layout-blockcontainer comp-text-h1-container w-container">
+                      <h1 class="composed-heading">Our Services -</h1>
+                      <h1 class="composed-heading p2-heading">Tailored to Your Needs</h1>
+                    </div>
+                  </div>
+                  <div class="wrapper-nav">
+                    <div data-w-id="79f567b2-2b6a-3239-1690-2cf5baa54329" class="slider-navigation prev-slide">
+                      <div style="-webkit-transform:translate3d(-5px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-5px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-5px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-5px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="wrapper-icon-left">
+                        <div class="left-arrow w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="22" viewbox="0 0 12 22">
+                            <g transform="translate(1 1)">
+                              <path d="M.5,0V13" transform="translate(4.5)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></path>
+                              <path d="M0,0H10L5,7Z" transform="translate(0 13)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></path>
+                            </g>
+                          </svg></div>
+                        <div class="left-arrow w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="22" viewbox="0 0 12 22">
+                            <g transform="translate(1 1)">
+                              <path d="M.5,0V13" transform="translate(4.5)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></path>
+                              <path d="M0,0H10L5,7Z" transform="translate(0 13)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></path>
+                            </g>
+                          </svg></div>
+                      </div>
+                    </div>
+                    <div data-w-id="abe2cc7a-8ee3-dd60-618f-fd2978453456" class="slider-navigation next-slide">
+                      <div style="-webkit-transform:translate3d(5px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(-180deg) skew(0, 0);-moz-transform:translate3d(5px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(-180deg) skew(0, 0);-ms-transform:translate3d(5px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(-180deg) skew(0, 0);transform:translate3d(5px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(-180deg) skew(0, 0)" class="wrapper-icon-right">
+                        <div class="right-arrow w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="22" viewbox="0 0 12 22">
+                            <g transform="translate(1 1)">
+                              <path d="M.5,0V13" transform="translate(4.5)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></path>
+                              <path d="M0,0H10L5,7Z" transform="translate(0 13)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></path>
+                            </g>
+                          </svg></div>
+                        <div class="right-arrow w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="22" viewbox="0 0 12 22">
+                            <g transform="translate(1 1)">
+                              <path d="M.5,0V13" transform="translate(4.5)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></path>
+                              <path d="M0,0H10L5,7Z" transform="translate(0 13)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></path>
+                            </g>
+                          </svg></div>
+                      </div>
+                    </div>
+                  </div>
+                </header>
+              </div>
+              <div class="w-layout-blockcontainer container-slider-structure w-container">
+                <div class="slider-wrapper w-dyn-list">
+                  <div role="list" class="slider-list w-dyn-items w-row">
+                    <div data-w-id="abe2cc7a-8ee3-dd60-618f-fd297845345c" role="listitem" class="slider-item w-dyn-item w-col w-col-3">
+                      <a href="#" class="link-block-slider w-inline-block">
+                        <div class="filter">
+                          <div class="w-layout-blockcontainer wrapper-header-carrousel w-container">
+                            <h1 class="title-card"></h1>
+                          </div>
+                        </div>
+                        <div class="wrapper-text">
+                          <div class="description-card"></div>
+                        </div><img src="" loading="lazy" alt="" class="item_img">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="w-dyn-empty">
+                    <div>No items found.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="w-layout-blockcontainer container-10-percent w-container">
+            <div class="w-layout-blockcontainer center-button-container w-container">
+              <a href="#" id="uncover-edge-btn" data-w-id="a235ede6-f34c-5b93-b58c-f2f965652387" class="uncover-button w-button">Uncover Our Edge</a>
+            </div>
+          </div>
+        </main>
+      </div>
+    </section>
+    <section id="section3" class="w-layout-blockcontainer home-page-3 section w-container">
+      <div class="w-layout-blockcontainer overlay-100 w-container"></div>
+      <div class="w-layout-blockcontainer container-page-3 w-container">
+        <div class="w-layout-blockcontainer container-top-slim w-container">
+          <div id="w-node-_123dd914-58ce-9b99-d9d0-742075b45342-1e901a2e" class="w-layout-layout quick-stack-1 wf-layout-layout">
+            <div id="w-node-_187fbff3-e8bd-a4f2-0693-83b7a2f2d816-1e901a2e" class="w-layout-cell">
+              <div class="w-layout-blockcontainer wrapper-nav-top w-container">
+                <address id="nav-top-btn" data-w-id="abe2cc7a-8ee3-dd60-618f-fd2978453452" class="slider-nav slider-nav-c2">
+                  <div style="-webkit-transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="wrapper-icon-top">
+                    <div class="up-arrow w-embed"><svg viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.4697 3.46967C11.7626 3.17678 12.2374 3.17678 12.5303 3.46967L18.5303 9.46967C18.8232 9.76256 18.8232 10.2374 18.5303 10.5303C18.2374 10.8232 17.7626 10.8232 17.4697 10.5303L12.75 5.81066L12.75 20C12.75 20.4142 12.4142 20.75 12 20.75C11.5858 20.75 11.25 20.4142 11.25 20L11.25 5.81066L6.53033 10.5303C6.23744 10.8232 5.76256 10.8232 5.46967 10.5303C5.17678 10.2374 5.17678 9.76256 5.46967 9.46967L11.4697 3.46967Z" fill="#fff"></path>
+                      </svg></div>
+                    <div class="up-arrow w-embed"><svg viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.4697 3.46967C11.7626 3.17678 12.2374 3.17678 12.5303 3.46967L18.5303 9.46967C18.8232 9.76256 18.8232 10.2374 18.5303 10.5303C18.2374 10.8232 17.7626 10.8232 17.4697 10.5303L12.75 5.81066L12.75 20C12.75 20.4142 12.4142 20.75 12 20.75C11.5858 20.75 11.25 20.4142 11.25 20L11.25 5.81066L6.53033 10.5303C6.23744 10.8232 5.76256 10.8232 5.46967 10.5303C5.17678 10.2374 5.17678 9.76256 5.46967 9.46967L11.4697 3.46967Z" fill="#fff"></path>
+                      </svg></div>
+                  </div>
+                </address>
+              </div>
+            </div>
+            <div id="w-node-_123dd914-58ce-9b99-d9d0-742075b45343-1e901a2e" class="w-layout-cell cell-3">
+              <h1 class="heading-left">WHY</h1>
+            </div>
+            <div id="w-node-_123dd914-58ce-9b99-d9d0-742075b45344-1e901a2e" class="w-layout-cell cell-4"><img src="images/Color-logo---no-background_1.png" loading="lazy" width="432" sizes="(max-width: 767px) 62vw, (max-width: 1439px) 432px, 100vw" srcset="images/Color-logo---no-background_1-p-500.png 500w, images/Color-logo---no-background_1-p-800.png 800w, images/Color-logo---no-background_1-p-1080.png 1080w, images/Color-logo---no-background_1-p-1600.png 1600w, images/Color-logo---no-background_1-p-2000.png 2000w, images/Color-logo---no-background_1-p-2600.png 2600w, images/Color-logo---no-background_1.png 3147w" alt="Fast Blocks Logo" class="horizontal-logo"></div>
+            <div id="w-node-_8e817500-c73c-b44d-0580-b82404e2e11c-1e901a2e" class="w-layout-cell">
+              <h1 class="heading-right">?</h1>
+            </div>
+          </div>
+        </div>
+        <div id="wheel-slider" class="wheel-slider">
+          <div class="swiper-container">
+            <div class="overlay"></div>
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <a href="#" class="slide-content w-inline-block"><img src="images/fonck_Cinematic_still_of_a_figure_holding_a_glowing_digital_hea_compressed.png" loading="lazy" sizes="30vw" srcset="images/fonck_Cinematic_still_of_a_figure_holding_a_glowing_digital_hea_compressed-p-500.png 500w, images/fonck_Cinematic_still_of_a_figure_holding_a_glowing_digital_hea_compressed-p-800.png 800w, images/fonck_Cinematic_still_of_a_figure_holding_a_glowing_digital_hea_compressed.png 1024w" alt="" class="slide-image">
+                  <div class="slide-inner">
+                    <div class="slide-header-wrap">
+                      <h2 class="card-heading-1 slide-category">Passion for Innovation</h2>
+                    </div>
+                    <div class="w-layout-blockcontainer in-card-spacer w-container"></div>
+                    <div class="slide-text-wrap">
+                      <div class="slide-category">We leverage cutting-edge technologies to deliver growth-driving solutions</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="#" class="slide-content w-inline-block"><img src="images/fonck_Cinematic_still_of_a_figure_balancing_on_a_digital_compressed.png" loading="lazy" sizes="30vw" srcset="images/fonck_Cinematic_still_of_a_figure_balancing_on_a_digital_compressed-p-500.png 500w, images/fonck_Cinematic_still_of_a_figure_balancing_on_a_digital_compressed-p-800.png 800w, images/fonck_Cinematic_still_of_a_figure_balancing_on_a_digital_compressed.png 1024w" alt="" class="slide-image">
+                  <div class="slide-inner">
+                    <div class="slide-header-wrap">
+                      <h2 class="card-heading-1 slide-category high-contrast">Agile Excellence</h2>
+                    </div>
+                    <div class="w-layout-blockcontainer in-card-spacer w-container"></div>
+                    <div class="slide-text-wrap">
+                      <div class="slide-category">Our Agile methodologies ensure flexibility, efficiency, and continuous innovation</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="#" class="slide-content w-inline-block"><img src="images/fonck_Cinematic_still_of_a_figure_standing_firm_on_a_digital_compressed.png" loading="lazy" sizes="30vw" srcset="images/fonck_Cinematic_still_of_a_figure_standing_firm_on_a_digital_compressed-p-500.png 500w, images/fonck_Cinematic_still_of_a_figure_standing_firm_on_a_digital_compressed-p-800.png 800w, images/fonck_Cinematic_still_of_a_figure_standing_firm_on_a_digital_compressed.png 1024w" alt="" class="slide-image">
+                  <div class="slide-inner">
+                    <div class="slide-header-wrap">
+                      <h2 class="card-heading-1 slide-category">Stoic Resilience</h2>
+                    </div>
+                    <div class="w-layout-blockcontainer in-card-spacer w-container"></div>
+                    <div class="slide-text-wrap">
+                      <div class="slide-category">Guided by Stoic principles, we turn challenges into opportunities for success</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="#" class="slide-content w-inline-block"><img src="images/fonck_Cinematic_still_of_a_figure_holding_a_digital_globe_compressed.png" loading="lazy" sizes="30vw" srcset="images/fonck_Cinematic_still_of_a_figure_holding_a_digital_globe_compressed-p-500.png 500w, images/fonck_Cinematic_still_of_a_figure_holding_a_digital_globe_compressed-p-800.png 800w, images/fonck_Cinematic_still_of_a_figure_holding_a_digital_globe_compressed.png 1024w" alt="" class="slide-image">
+                  <div class="slide-inner">
+                    <div class="slide-header-wrap">
+                      <h2 class="card-heading-1 slide-category">Holistic Approach</h2>
+                    </div>
+                    <div class="w-layout-blockcontainer in-card-spacer w-container"></div>
+                    <div class="slide-text-wrap">
+                      <div class="slide-category">We consider all aspects of your business to drive overall success</div>
+                    </div>
+                  </div>
+                  <div class="w-layout-blockcontainer in-card-spacer w-container"></div>
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="#" class="slide-content w-inline-block"><img src="images/fonck_Cinematic_still_of_a_futuristic_cityscape_representing_compressed.png" loading="lazy" sizes="30vw" srcset="images/fonck_Cinematic_still_of_a_futuristic_cityscape_representing_compressed-p-500.png 500w, images/fonck_Cinematic_still_of_a_futuristic_cityscape_representing_compressed-p-800.png 800w, images/fonck_Cinematic_still_of_a_futuristic_cityscape_representing_compressed.png 1024w" alt="" class="slide-image">
+                  <div class="slide-inner">
+                    <div class="slide-header-wrap">
+                      <h2 class="card-heading-1 slide-category">Future-ready</h2>
+                    </div>
+                    <div class="w-layout-blockcontainer in-card-spacer w-container"></div>
+                    <div class="slide-text-wrap">
+                      <div class="slide-category">We deliver solutions that are relevant today and primed for the future</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-navigation">
+            <div class="w-embed">
+              <style>
+.swiper-nav-btn {
+	outline: none;
+}
+</style>
+            </div>
+            <a href="#" class="swiper-nav-btn prev w-inline-block">
+              <div class="swiper-nav-btn-icon w-embed"><svg width="100%" height="100%" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="M10.3637 17.9125L6.85085 14.4183H22.7143C23.4244 14.4183 24 13.8458 24 13.1394V11.8606C24 11.1542 23.4244 10.5817 22.7143 10.5817H6.85085L10.3637 7.08752C10.8659 6.58806 10.8659 5.77832 10.3637 5.27892L9.45458 4.37459C8.95245 3.87514 8.13838 3.87514 7.63631 4.37459L0.376593 11.5957C-0.125531 12.0951 -0.125531 12.9048 0.376593 13.4043L7.63631 20.6254C8.13844 21.1249 8.95251 21.1249 9.45458 20.6254L10.3637 19.7211C10.8659 19.2217 10.8659 18.4119 10.3637 17.9125Z"></path>
+                </svg></div>
+            </a>
+            <a href="#" class="swiper-nav-btn next w-inline-block">
+              <div class="swiper-nav-btn-icon w-embed"><svg width="100%" height="100%" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="M13.6363 7.08752L17.1492 10.5817H1.28572C0.575625 10.5817 0 11.1542 0 11.8606V13.1394C0 13.8458 0.575625 14.4183 1.28572 14.4183H17.1492L13.6363 17.9125C13.1342 18.4119 13.1342 19.2217 13.6363 19.7211L14.5455 20.6254C15.0476 21.1249 15.8617 21.1249 16.3637 20.6254L23.6234 13.4043C24.1255 12.9048 24.1255 12.0951 23.6234 11.5957L16.3637 4.37459C15.8616 3.87514 15.0475 3.87514 14.5455 4.37459L13.6363 5.27892C13.1342 5.77832 13.1342 6.58806 13.6363 7.08752V7.08752Z"></path>
+                </svg></div>
+            </a>
+          </div>
+        </div>
+        <div class="w-layout-blockcontainer container-12-percent w-container">
+          <div class="w-layout-blockcontainer center-button-container w-container">
+            <a href="#" id="move-to-cta-btn" data-w-id="01ea0c74-85c5-45a2-0d7e-2d5045ad0951" class="begin-journey-button w-button">Sounds great!</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section4" class="home-page-4 section">
+      <div data-poster-url="videos/Zoom-out-midjourney-ben-compressed-poster-00001.jpg" data-video-urls="videos/Zoom-out-midjourney-ben-compressed-transcode.mp4,videos/Zoom-out-midjourney-ben-compressed-transcode.webm" data-autoplay="true" data-loop="true" data-wf-ignore="true" class="background-video w-background-video w-background-video-atom"><video id="969ed3d6-e754-b8c2-bbf6-0a3232d22635-video" autoplay="" loop="" style="background-image:url(&quot;videos/Zoom-out-midjourney-ben-compressed-poster-00001.jpg&quot;)" muted="" playsinline="" data-wf-ignore="true" data-object-fit="cover">
+          <source src="videos/Zoom-out-midjourney-ben-compressed-transcode.mp4" data-wf-ignore="true">
+          <source src="videos/Zoom-out-midjourney-ben-compressed-transcode.webm" data-wf-ignore="true">
+        </video>
+        <div class="w-layout-blockcontainer container-centered w-container">
+          <h1 class="main-heading-2">Ready to Elevate Your Business?</h1>
+          <div class="subtitle">Unlock Your Digital Potential<br></div>
+          <div class="w-layout-blockcontainer container-7 w-container">
+            <a id="start-now-btn" href="#" class="start-now-btn w-button">START NOW</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section5" class="footer-subscribe section">
+      <div class="container-3">
+        <div class="footer-form-two w-form">
+          <form id="wf-form-Footer-Form-Two" name="wf-form-Footer-Form-Two" data-name="Footer Form Two" method="get" class="footer-form-container-two" data-wf-page-id="64d95c45ec479ec11e901a2e" data-wf-element-id="1f83d627-61ec-7ea2-c089-c2fd21238734">
+            <div class="footer-form-title">Get Insights Delivered</div>
+            <div class="footer-form-block-two"><input type="email" class="footer-form-input w-input" maxlength="256" name="Footer-Email-Two" data-name="Footer Email Two" aria-label="Enter your email" placeholder="Enter your email" id="Footer-Email-Two" required=""><input type="submit" value="Subscribe Now" data-wait="Please wait..." class="button-primary-2 footer-form-button w-button"></div>
+          </form>
+          <div class="w-form-done">
+            <div>Thank you! Your submission has been received!</div>
+          </div>
+          <div class="w-form-fail">
+            <div>Oops! Something went wrong while submitting the form.</div>
+          </div>
+        </div>
+        <div class="footer-wrapper-three">
+          <div class="footer-block-three">
+            <a href="#" class="footer-link-three">About us</a>
+            <a href="#" class="footer-link-three">Services</a>
+            <a href="#" class="footer-link-three">Technology</a>
+            <a href="#" class="footer-link-three">Pricing</a>
+            <a href="#" class="footer-link-three">Resources</a>
+          </div>
+          <div class="footer-social-block-three">
+            <a href="#" class="footer-social-link-three w-inline-block"></a>
+            <a href="#" class="footer-social-link-three w-inline-block"></a>
+            <a href="#" class="footer-social-link-three w-inline-block"></a>
+            <a href="#" class="footer-social-link-three w-inline-block"></a>
+          </div>
+        </div>
+        <div class="footer-divider-two"></div>
+        <div class="footer-bottom">
+          <div class="footer-copyright">© 2023 Fast Blocks. All rights reserved</div>
+          <div class="footer-legal-block">
+            <a href="#" class="footer-legal-link">Terms Of Use</a>
+            <a href="#" class="footer-legal-link">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=64b21fc0a5aef8291efa036f" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="js/webflow.js" type="text/javascript"></script><!--  SwiperJS Script Embed  -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <!--  Initialize SwiperJS  -->
+  <script>
+$(document).ready( function() {
+	var swiper = new Swiper('.swiper-container', {
+		effect: 'coverflow', 		// Kind of slider effect
+		centeredSlides: true, 	// Force centered slide
+		slidesPerView: 'auto', 	// auto = the slide itself defined the viewport of the slider
+		allowTouchMove: true, 	// Allows more control options except Slide Next and Slide Prev
+		speed: 1000, 						// Speed of the change animation
+		loop: true,						 	// Looping the slides
+		mousewheel: true, 			// control the slider with mousewheel
+    navigation: {
+    	nextEl: '.next', 			// Class for the Next Slide Button
+      prevEl: '.prev', 			// Class for the Previous Slide Button
+    },
+		coverflowEffect: { 			// Properties for the coverflow effect
+			rotate: 0,
+			stretch: 0,
+			depth: 150,
+			modifier: 1,
+			slideShadows : true,
+    },
+  });
+});
+</script>
+  <!--  Carousel Slider  -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <!--  To see changes refresh without cache CMD+Shift+R or Ctrl+F5  -->
+  <!--  or use Cache Killer Chrome Extension  -->
+  <!-- <script src="https://weblocks.io/library.js"></script> -->
+  <script>
+$(document).ready(function () {
+var slider_wrapper = new Swiper(".slider-wrapper", {
+wrapperClass: "slider-list",
+slideClass: "slider-item",
+navigation: {
+nextEl: '.next-slide',
+prevEl: '.prev-slide'
+},
+pagination: {
+type: 'bullets',
+el: '.pagination',
+clickable: true,
+},
+speed: 700,
+slidesPerView: 'auto',
+loop: true,
+on: {
+init: function () {
+var swiper_pagination_bulletwe_style = document.createElement('style'); swiper_pagination_bulletwe_style.type = 'text/css'; swiper_pagination_bulletwe_style.innerHTML =
+`.swiper-pagination-bullet{ background:#333; margin-right:8px; transition:.2s; }`;
+document.getElementsByTagName('head')[0].appendChild(swiper_pagination_bulletwe_style);var swiper_pagination_bullethoverwe_style = document.createElement('style'); swiper_pagination_bullethoverwe_style.type = 'text/css'; swiper_pagination_bullethoverwe_style.innerHTML =
+`.swiper-pagination-bullet:hover{ opacity:.7; }`;
+document.getElementsByTagName('head')[0].appendChild(swiper_pagination_bullethoverwe_style);var swiper_pagination_bullet_activehoverwe_style = document.createElement('style'); swiper_pagination_bullet_activehoverwe_style.type = 'text/css'; swiper_pagination_bullet_activehoverwe_style.innerHTML =
+`.swiper-pagination-bullet-active:hover{ opacity:1; }`;
+document.getElementsByTagName('head')[0].appendChild(swiper_pagination_bullet_activehoverwe_style);var swiper_pagination_fractionwe_style = document.createElement('style'); swiper_pagination_fractionwe_style.type = 'text/css'; swiper_pagination_fractionwe_style.innerHTML =
+`.swiper-pagination-fraction{ font-size:16px; }`;
+document.getElementsByTagName('head')[0].appendChild(swiper_pagination_fractionwe_style);
+},
+},
+});
+});
+</script>
+</body>
+</html>
